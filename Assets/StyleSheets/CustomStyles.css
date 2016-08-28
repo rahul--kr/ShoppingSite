@@ -1,0 +1,82 @@
+/*
+=======================================================================
+ File Name	: CustomStyles.css
+ Description: Style sheet for application pages with styles other than bootstrap.css.
+ Created By	: Rahul Kumar
+ Created	: 19 Aug 2016
+=======================================================================
+*/
+
+.halfWidth {
+	width: 50%;
+}
+
+.navbar {
+	background-color: #00A7A2;
+}
+
+#regForm, #loginForm {
+	margin: 0 auto;
+	width: 500px;
+	padding: 1em;
+	border: 1px solid #CCC;
+	border-radius: 1em;
+	background-color: #fff;
+}
+
+fieldset div+div {
+	margin-top: 1em;
+}
+
+.prodImage {
+	float: left;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.dottedBox {
+	border: 1px dotted black;
+}
+
+.hiddenBox {
+	border: 1px hidden black;
+	background-color: #eeeeee
+}
+
+.prodThumbnail {
+	float: left;
+	margin-left: 5px;
+	width: 250px;
+	height: 400px;
+}
+
+.clearFloat {
+	clear: both;
+}
+
+p.text-xs-center a+a {
+	margin-left: 50px;
+}
+
+.leftBar {
+	margin-top: 25px;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+.textBlack {
+	color: inherit;
+}
+
+.leftNavMargin {
+	margin-left: 10px;
+}
+
+.bodyDist {
+	margin-left: 60px;
+	margin-top: 110px;
+}
+
+.cartData > td {
+	padding-top: 20px;
+}
