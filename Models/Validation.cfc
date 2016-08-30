@@ -18,7 +18,7 @@ component displayName="Validation" hint="CFC file for validating user inputs" ac
 			Variables.errorMessage = ListAppend(Variables.errorMessage, "Email field is required.", '\');
 		else if( Len(Arguments.eMail) GT 50 )
 			Variables.errorMessage = ListAppend(Variables.errorMessage, "The email cannot be more than 50 characters.", '\');
-		else if( REFind('^[a-z][\w\.]*@\w+(\.\w{2,3}){1,2}$', Arguments.eMail) EQ 0 )
+		else if( REFind('^[a-z][\w\.]*@[a-z]\w+(\.[a-z]{2,3}){1,2}$', Arguments.eMail) EQ 0 )
 			Variables.errorMessage = ListAppend(Variables.errorMessage, "Please enter a valid email address.", '\');
 	}
 

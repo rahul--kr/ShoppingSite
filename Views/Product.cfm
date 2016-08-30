@@ -15,6 +15,7 @@
 		<cfset Variables.productData = Request.productActionObject.getProductData( 1 ) />
 </cfif>
 
+
 <! DOCTYPE HTML >
 <html>
 	<head>
@@ -33,29 +34,29 @@
 				<h4><cfoutput>#Variables.productData.ProductName#</cfoutput></h4>
 				<p class="text-xs-left small">by <cfoutput>#Variables.productData.ManufacturerName#</cfoutput></p>
 				<hr />
-				<p><span class="text-danger">Price: &#8377 <cfoutput>#Variables.productData.ProductPrice#</cfoutput></span> (Incl. of all taxes)
+				<p><span class="text-danger">Price: &#8377 <cfoutput>#numberFormat( Variables.productData.ProductPrice, '9.99' )#</cfoutput></span> (Incl. of all taxes)
 				<br />
 
 				<cfif Variables.productData.ProductShippingCost GT 0 >
-					+ &#8377 <cfoutput>#Variables.productData.ProductShippingCost#</cfoutput> Delivery Charges</p>
+					+ &#8377 <cfoutput>#numberFormat( Variables.productData.ProductShippingCost, '9.99' )#</cfoutput> Delivery Charges</p>
 				</cfif>
 
 				<cfif Variables.productData.UnitsInStock GT 0 >
-					<button class="btn btn-primary col-xs-2" type="button" onClick="addToCart(<cfoutput>#Url.pId#</cfoutput>)"><span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> Add to Cart</button>
+					<button class="btn btn-info col-xs-2" type="button" onClick="addToCart(<cfoutput>#Url.pId#</cfoutput>)"><span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> Add to Cart</button>
 					<br /> <br />
 					<p class="text-success">Product Available</p>
-				<cfelse>
-					<div class="col-xs-3">
-						<input class="col-xs-2 form-control" type="text" placeholder="your email address">
-					</div>
-					<button class="btn btn-primary col-xs-2" type="button" onClick=""><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Notify Me</button>
-					<br /> <br />
-					<p class="text-danger">Product Unavailable</p>
+					<cfelse>
+						<div class="col-xs-3">
+							<input class="col-xs-2 form-control" type="text" placeholder="your email address">
+						</div>
+						<button class="btn btn-info col-xs-2" type="button" onClick=""><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Notify Me</button>
+						<br /> <br />
+						<p class="text-danger">Product Unavailable</p>
 				</cfif>
 				<p><cfoutput>#Variables.productData.ProductDesc#</cfoutput></p>
 			</div>
 
-			<p class="clearFloat"></p>
+			<br class="clearFloat" />
 			<cfinclude template="_Footer.cfm">
 		</div>
 	</body>

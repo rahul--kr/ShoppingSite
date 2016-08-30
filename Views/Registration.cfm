@@ -21,19 +21,19 @@
 		<br /> <br /> <br /> <br />
 		<cfinclude template="/Views/_ListErrors.cfm" runOnce=false>
 
-		<form name="regForm" id="regForm">
+		<form name="regForm" id="regForm" class="form">
 			<fieldset>
 				<legend>Create Account: </legend>
-				<div>
-					<label for="tEMail">Email Address<sup class="text-danger">*</sup> : </label>
-					<input type="text" name="eMail" class="form-control" id="tEMail" placeholder="user@example.com" onBlur="validateEMail()" />
-					<div class="text-danger text-xs-center small"><span id="pEMail"></span></div>
-				</div>
-
 				<div>
 					<label for="tUName">Username<sup class="text-danger">*</sup> : </label>
 					<input type="text" name="uName" class="form-control" id="tUName" placeholder="6 to 15 character string" onBlur="validateUName()" />
 					<div class="text-danger text-xs-center small"><span id="pUName"></span></div>
+				</div>
+
+				<div>
+					<label for="tEMail">Email Address<sup class="text-danger">*</sup> : </label>
+					<input type="text" name="eMail" class="form-control" id="tEMail" placeholder="user@example.com" onBlur="validateEMail()" autofocus />
+					<div class="text-danger text-xs-center small"><span id="pEMail"></span></div>
 				</div>
 
 				<div>
@@ -69,15 +69,14 @@
 				<p class="text-xs-center small">All the fields marked with <sup class="text-danger">*</sup> are mandatory.</p>
 
 				<div>
-					<input type="button" name="formSubmit" class="btn btn-lg col-xs-5" id="btnSubmit" value="Register" onClick="validateForm()" />
-					<input type="reset" name="formSubmit" class="btn btn-lg col-xs-5" id="btnSubmit" value="Reset" />
+					<input type="button" name="formSubmit" class="btn btn-info col-xs-4 col-xs-offset-1" id="btnSubmit" value="Register" onClick="validateForm()" />
+					<input type="reset" name="formReset" class="btn btn-info col-xs-4 col-xs-offset-2" id="btnReset" value="Reset" />
 				</div>
-
 			</fieldset>
 		</form>
 
 		<br />
-		<p class="clearFloat"></p>
+		<br class="clearFloat" />
 		<cfinclude template="_Footer.cfm">
 	</body>
 </html>

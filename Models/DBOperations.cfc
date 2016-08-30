@@ -140,4 +140,40 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		}
 		return Local.productData;
 	}
+
+	public function getUidFromUname( string uName ) {
+		Local.queryService = new query();
+		queryService.setName( "getUname" );
+
+		try {
+			Local.queryService.addParam(name="uName", value=Arguments.uName, cfsqltype="cf_sql_varchar");
+			Local.queryUname = Local.queryService.execute(sql="SELECT
+				UserId
+				FROM UserDetail
+				WHERE UserName=:uName").getResult();
+		}
+		catch( any exception ) {
+			return Arguments.exception.message;
+		}
+		return Local.queryUname.UserId;
+	}
+
+	public function getAddresses( string uId ) {
+		Local.queryService = new query();
+		queryService.setName( "getAddress" );
+
+		try {
+			Local.queryService.addParam(name="uId", value=Arguments.uId, cfsqltype="cf_sql_bigint");
+			Local.queryAddress = Local.queryService.execute(sql="SELECT
+				UserShippingId, Concat( FirstName, ' ', LastName ) AS Name, HouseNo, Street, PostalCode, City, State, Country, MobileNo
+				FROM UserDetail INNER JOIN UserShippingDetail
+				ON [dbo].[UserShippingDetail].UserId = [dbo].[UserDetail].UserId INNER JOIN ShippingAddress
+				ON [dbo].[UserShippingDetail].AddressId = [dbo].[ShippingAddress].AddressId
+				WHERE UserDetail.UserId=:uId").getResult();
+		}
+		catch( any exception ) {
+			return Arguments.exception.message;
+		}
+		return Local.queryAddress;
+	}
 }

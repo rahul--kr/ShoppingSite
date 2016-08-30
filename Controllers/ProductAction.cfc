@@ -11,7 +11,6 @@ component displayName="ProductAction" hint="handles product page operations" acc
 
 	// get the data of product according to product id
 	public function getProductData( string pId ) {
-		Local.productData = Request.dBOperationsObject.getProductData( Arguments.pId );
-		return Local.productData;
+		return Request.dBOperationsObject.getProductData( Arguments.pId );
 	}
 }

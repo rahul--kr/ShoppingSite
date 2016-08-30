@@ -7,6 +7,11 @@
 =======================================================================
 */
 
+// method to get username input field automatically focused instead of the search field 
+window.onload = function() {
+	document.getElementById( "tUName" ).focus();
+};
+
 // method to validate the username input
 function validateUName() {
 	var message = "";

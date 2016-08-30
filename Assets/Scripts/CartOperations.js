@@ -16,8 +16,7 @@ function addToCart( productId ) {
 				location.reload();
 			}
 			else {
-				alert(xhttp.responseText);
-				window.location = "Login.cfm?errors=" + xhttp.responseText;
+				window.location = "Error.cfm?errors=" + xhttp.responseText;
 			}
 		}
 	};
@@ -25,21 +24,28 @@ function addToCart( productId ) {
 	xhttp.send();
 }
 
+// method to extract quantity returned after incrementing or decrementing product quantity in cart
+function getQty( response ) {
+	var qtyStart = response.indexOf( "Success" );
+	var qtyEnd = response.indexOf( "\\" );
+	return response.substring( qtyStart+7, qtyEnd );
+}
+
 // method to decrement the quantity of a product in cart by 1
-function decreaseQuantity( productId, unitsInStock ) {
+function decreaseQuantity( productId, costPerItem ) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if ( xhttp.readyState == 4 && xhttp.status == 200 ) {
 			if ( xhttp.responseText.search(/Success/) > 0 ) {
-				var qtyStart = xhttp.responseText.indexOf( "Success" );
-				var qtyEnd = xhttp.responseText.indexOf( "\\" );
-				if( xhttp.responseText.substring( qtyStart+7, qtyEnd ) == "0" )
+				var qty = getQty( xhttp.responseText );
+				if( qty == "0" )
 					location.reload();
-				document.getElementById( "prodQty"+productId ).innerHTML = xhttp.responseText.substring( qtyStart+7, qtyEnd );
+				document.getElementById( "prodQty"+productId ).innerHTML = qty;
+				document.getElementById( "prodSubtotal"+productId ).innerHTML = costPerItem * qty;
+				document.getElementById( "gTotal" ).innerHTML = parseInt( document.getElementById( "gTotal" ).innerHTML ) - parseInt( costPerItem );
 			}
 			else {
-				alert( xhttp.responseText );
-				window.location = "Login.cfm?errors=" + xhttp.responseText;
+				window.location = "Error.cfm?errors=" + xhttp.responseText;
 			}
 		}
 	};
@@ -48,18 +54,19 @@ function decreaseQuantity( productId, unitsInStock ) {
 }
 
 //method to increment the quantity of a product in cart by 1
-function increaseQuantity( productId, unitsInStock ) {
+function increaseQuantity( productId, costPerItem, unitsInStock ) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if ( xhttp.readyState == 4 && xhttp.status == 200 ) {
 			if ( xhttp.responseText.search( /Success/ ) > 0 ) {
-				var qtyStart = xhttp.responseText.indexOf( "Success" );
-				var qtyEnd = xhttp.responseText.indexOf( "\\" );
-				document.getElementById( "prodQty"+productId ).innerHTML = xhttp.responseText.substring( qtyStart+7, qtyEnd );
+				var qty = getQty( xhttp.responseText );
+				document.getElementById( "prodQty"+productId ).innerHTML = qty;
+				document.getElementById( "prodSubtotal"+productId ).innerHTML = costPerItem * qty;
+				if( xhttp.responseText[ xhttp.responseText.indexOf("Success") - 1] == 'y' )
+					document.getElementById( "gTotal" ).innerHTML = parseInt( document.getElementById( "gTotal" ).innerHTML ) + parseInt( costPerItem );
 			}
 			else {
-				alert( xhttp.responseText );
-				window.location = "Login.cfm?errors=" + xhttp.responseText;
+				window.location = "Error.cfm?errors=" + xhttp.responseText;
 			}
 		}
 	};
@@ -67,5 +74,3 @@ function increaseQuantity( productId, unitsInStock ) {
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send( "pId=" + productId + "&stock=" + unitsInStock );
 }
-
-

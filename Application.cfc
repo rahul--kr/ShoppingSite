@@ -55,6 +55,7 @@ component displayname="Application" hint="handle the application" accessors=true
 		Request.categoryActionObject = createObject("component", "Controllers.CategoryAction" );
 		Request.productActionObject = createObject("component", "Controllers.ProductAction" );
 		Request.cartActionObject = createObject("component", "Controllers.CartAction" );
+		Request.checkoutActionObject = createObject("component", "Controllers.CheckoutAction");
 		WriteLog(text="Request started successfully.", type="Information", file="logDemoApplication");
 		return true;
 	}

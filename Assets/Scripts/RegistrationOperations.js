@@ -15,7 +15,7 @@ function validateEMail() {
 	message = message == "" ? isEmpty( eMail ) : message;
 	message = message == "" ? isLTMaxlength( eMail, 50 ) : message;
 	if( message == "" ) {
-		if( eMail.search(/^[a-z][\w\.]*@\w+(\.\w{2,3}){1,2}$/) < 0 ) {
+		if( eMail.search(/^[a-z][\w\.]*@[a-z]\w+(\.[a-z]{2,3}){1,2}$/) < 0 ) {
 			message = "Please enter a valid email address.";
 		}
 	}

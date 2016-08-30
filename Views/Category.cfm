@@ -47,13 +47,13 @@
 								<span><cfoutput>#Variables.productList.ProductName[loopCount]#</cfoutput></span>
 							</a>
 							<br />
-							<span class="text-danger"> &#8377 <cfoutput>#Variables.productList.ProductPrice[loopCount]#</cfoutput></span>
+							<span class="text-danger"> &#8377 <cfoutput>#numberFormat( Variables.productList.ProductPrice[loopCount], '9.99')#</cfoutput></span>
 						</p>
 					</div>
 				</cfloop>
 			</div>
 
-			<p class="clearFloat"></p>
+			<br class="clearFloat" />
 			<div class="hiddenBox">
 				<br />
 				<p class="text-xs-center">

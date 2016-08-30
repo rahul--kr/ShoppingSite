@@ -42,8 +42,8 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 
 	remote string function decreaseQuantity( string pId ) {
 		try {
-			Local.newQty = structFind( Session.cart, Arguments.pId );
-			Local.newQty = Local.newQty - 1;
+			Local.quantity = structFind( Session.cart, Arguments.pId );
+			Local.newQty = Local.quantity - 1;
 			structDelete( Session.cart, Arguments.pId );
 			if( Local.newQty > 0 )
 				structInsert( Session.cart, Arguments.pId, Local.newQty );
@@ -56,16 +56,18 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 
 	remote string function increaseQuantity( string pId, string stock ) {
 		try {
+			Local.incremented = "n"; // "n" for no; "y" for yes: to keep track if the value was incremented
 			Local.newQty = structFind( Session.cart, Arguments.pId );
-			Local.newQty = Local.newQty + 1;
-			if( Local.newQty > Arguments.stock )
-				Local.newQty = Local.newQty - 1;
+			if( Local.newQty < Arguments.stock ) {
+				Local.newQty = Local.newQty + 1;
+				Local.incremented = "y";
+			}
 			structDelete( Session.cart, Arguments.pId );
 			structInsert( Session.cart, Arguments.pId, Local.newQty );
 		}
 		catch( any exception ) {
 			return Arguments.exception.message;
 		}
-		return "Success" & toString( Local.newQty ) & "\\";
+		return Local.incremented & "Success" & toString( Local.newQty ) & "\\";
 	}
 }

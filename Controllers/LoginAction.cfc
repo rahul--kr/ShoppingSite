@@ -28,6 +28,7 @@ component displayName="LoginAction" hint="action page for Login page view" acces
 		// rotate session and set session variables after user is successfully authenticated
 		sessionRotate();
 		Session.userName = Arguments.uName;
+		Session.userId = Request.dBOperationsObject.getUidFromUname( Session.userName );
 		return "Success";
 	}
 }

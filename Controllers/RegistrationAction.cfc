@@ -37,6 +37,7 @@ component displayName="RegistrationAction" hint="Action page for Registration pa
 		// rotate session and set session vaiables
 		sessionRotate();
 		Session.userName = Arguments.uName;
+		Session.userId = Request.dBOperationsObject.getUidFromUname( Session.userName );
 		return "Success";
  	}
 }
