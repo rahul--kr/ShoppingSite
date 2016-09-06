@@ -78,8 +78,56 @@ component displayName="Validation" hint="CFC file for validating user inputs" ac
 			Variables.errorMessage = ListAppend(Variables.errorMessage, "Please enter a valid 10 digit phone number.", '\');
 	}
 
+	package function validateHouseNo( string houseNo ) hint="method to validate address house number" output="false" {
+		if( Arguments.houseNo EQ "" )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "House number field is required.", '/');
+		else  if( Len(Arguments.houseNo) GT 50 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "The house number cannot be more than 50 characters.", '/');
+	}
+
+	package function validateStreet( string street ) hint="method to validate address street" output="false" {
+		if( Arguments.street EQ "" )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "Street field is required.", '/');
+		else  if( Len(Arguments.street) GT 50 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "The street cannot be more than 50 characters.", '/');
+	}
+
+	package function validateCity( string city ) hint="method to validate city" output="false" {
+		if( Arguments.city EQ "" )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "City field is required.", '/');
+		else  if( Len(Arguments.city) GT 50 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "The city cannot be more than 50 characters.", '/');
+		else  if( REFind('^[a-zA-Z]+[\s[a-zA-Z]+]*$', Arguments.city) EQ 0 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "Please enter a valid city name.", '/');
+	}
+
+	package function validatePin( string pin ) hint="method to validate PIN code" output="false" {
+		if( Arguments.pin EQ "" )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "PIN code field is required.", '/');
+		else  if( REFind('^[A-Za-z0-9]+$', Arguments.pin) EQ 0 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "Please enter a valid 6 digit PIN code.", '/');
+	}
+
+	package function validateState( string state) hint="method to validate state" output="false" {
+		if( Arguments.state EQ "" )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "State field is required.", '/');
+		else  if( Len(Arguments.state) GT 50 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "The state cannot be more than 50 characters.", '/');
+		else  if( REFind('^[a-zA-Z]+[\s[a-zA-Z]+]*$', Arguments.state) EQ 0 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "Please enter a valid state name.", '/');
+	}
+
+	package function validateCountry( string country ) hint="method to validate country" output="false" {
+		if( Arguments.country EQ "" )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "Country field is required.", '/');
+		else  if( Len(Arguments.country) GT 50 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "The country cannot be more than 50 characters.", '/');
+		else  if( REFind('^[a-zA-Z]+[\s[a-zA-Z]+]*$', Arguments.country) EQ 0 )
+			Variables.errorMessage = ListAppend(Variables.errorMessage, "Please enter a valid country name.", '/');
+	}
+
 	// validate the whole registration form at once for correct format
-	public String function validateForm(struct userData) hint="method to validate the whole form at once" output="false" {
+	public String function validateRegForm(struct userData) hint="method to validate the whole form at once" output="false" {
 		Variables.errorMessage = "";
 		validateEMail( Arguments.userData.eMail );
 		validateUName( Arguments.userData.uName );
@@ -96,6 +144,17 @@ component displayName="Validation" hint="CFC file for validating user inputs" ac
 		Variables.errorMessage = "";
 		validateUName( Arguments.userData.uName );
 		validatePass( Arguments.userData.pass );
+		return Variables.errorMessage;
+	}
+
+	public String function validateAddress( struct address ) {
+		Variables.errorMessage = "";
+		validateHouseNo( Arguments.address.houseNo );
+		validateStreet( Arguments.address.street );
+		validatePin( Arguments.address.pCode );
+		validateCity( Arguments.address.city );
+		validateState( Arguments.address.state );
+		validateCountry( Arguments.address.country );
 		return Variables.errorMessage;
 	}
 }

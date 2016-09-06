@@ -20,6 +20,7 @@
 		<cfinclude template="_Header.cfm">
 		<br /> <br /> <br /> <br />
 		<cfinclude template="/Views/_ListErrors.cfm" runOnce=false>
+		<cfinclude template="/Views/_NoScript.cfm">
 
 		<form name="regForm" id="regForm" class="form">
 			<fieldset>
@@ -69,7 +70,7 @@
 				<p class="text-xs-center small">All the fields marked with <sup class="text-danger">*</sup> are mandatory.</p>
 
 				<div>
-					<input type="button" name="formSubmit" class="btn btn-info col-xs-4 col-xs-offset-1" id="btnSubmit" value="Register" onClick="validateForm()" />
+					<input type="button" name="formSubmit" class="btn btn-info col-xs-4 col-xs-offset-1" id="btnSubmit" value="Register" onClick="register()" />
 					<input type="reset" name="formReset" class="btn btn-info col-xs-4 col-xs-offset-2" id="btnReset" value="Reset" />
 				</div>
 			</fieldset>

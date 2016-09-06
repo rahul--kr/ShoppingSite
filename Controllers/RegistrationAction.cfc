@@ -16,28 +16,30 @@ component displayName="RegistrationAction" hint="Action page for Registration pa
 	// get user registered to access the site
 	remote String function register( string eMail, string uName, string pass, string cnfPass, string fName, string lName, string mobile ) {
 		// validate user input data for correct format
-		Local.errorMessage = Request.validationObject.validateForm( Arguments );
+		Local.errorMessage = Request.validationObject.validateRegForm( Arguments );
 
 		// check for unique data( email, username, mobile )
-		if( Local.errorMessage=="" ) {
+		if( Local.errorMessage == "" ) {
 			Local.errorMessage = Request.dBOperationsObject.checkUnique( Arguments.eMail, Arguments.uName, Arguments.mobile );
 		}
 		// insert user registration data into DB
-		if( Local.errorMessage=="" ) {
+		if( Local.errorMessage == "" ) {
 			Local.errorMessage = Request.dBOperationsObject.insertIntoDB( Arguments );
 		}
+/*
 		// send email to the registered email address
-		if( Local.errorMessage=="" ) {
-			Local.errorMessage = Request.sendMailObject.sendMail( Arguments.eMail, Application.fromEmail, "You are successfully registered.", "jfrbe" );
+		if( Local.errorMessage == "" ) {
+			Local.errorMessage = Request.sendMailObject.sendMail( Arguments.eMail, Application.fromEmail, "You are successfully registered.", "Kindly login to continue." );
 		}
+*/
 		// return error message if any error is found or return success if successfully registered
 		if( Local.errorMessage != "" ) {
 			return Local.errorMessage;
 		}
-		// rotate session and set session vaiables
+		// rotate session and set session variables after user is successfully authenticated
 		sessionRotate();
 		Session.userName = Arguments.uName;
-		Session.userId = Request.dBOperationsObject.getUidFromUname( Session.userName );
+		Request.dBOperationsObject.getUidFromUname( Session.userName );
 		return "Success";
  	}
 }

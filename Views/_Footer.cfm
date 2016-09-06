@@ -17,9 +17,9 @@
 				<br />
 
 				<span class="nav-item col-lg-2">Connect with us: </span>
-				<a href="" class="nav-item col-lg-1">Facebook</a>
-				<a href="" class="nav-item col-lg-1">Twitter</a>
-				<a href="" class="nav-item col-lg-1">Instagram</a>
+				<a href="https://www.fb.com/rahul.kr.1189" class="nav-item col-lg-1" target="_blank">Facebook</a>
+				<a href="" class="nav-item col-lg-1" target="_blank">Twitter</a>
+				<a href="" class="nav-item col-lg-1" target="_blank">Instagram</a>
 
 				<br /> <hr />
 

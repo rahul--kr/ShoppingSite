@@ -14,7 +14,7 @@ component displayname="Application" hint="handle the application" accessors=true
 	}
 
 	this.applicationTimeout = Createtimespan(0, 0, 05, 10);
-	this.clientManagement = false;
+	this.clientManagement = true;
 	this.clientStorage = "cookie";
 	this.loginStorage = "cookie";
 	this.name = "Shopping Site";
@@ -22,7 +22,7 @@ component displayname="Application" hint="handle the application" accessors=true
 	this.sessionType="j2ee";
 	this.sessionManagement = true;
 	this.sessionTimeout = Createtimespan(0, 0, 05, 0);
-	this.setClientCookies = false;
+	this.setClientCookies = true;
 	this.setDomainCookies =false;
 	this.dataSource = "ShoppingSiteDSN";
 	this.mappings["/Root"] = getDirectoryFromPath(getCurrentTemplatePath());
@@ -31,18 +31,19 @@ component displayname="Application" hint="handle the application" accessors=true
 	// The application first starts: the first request for a page is processed or the first CFC method is invoked by an event gateway instance, or a web services or Flash Remoting CFC.
 	function onApplicationStart() {
 		WriteLog( text="Application started successfully.", type="Information", file="logDemoApplication" );
-	}
-
-	// A session starts.
-	function onSessionStart() {
-		WriteLog(text="Session started successfully.", type="Information", file="logDemoApplication");
-		Session.cart = StructNew();
 		// query the DB to get categories and store it in an Application scope variable ( would be needing it everywhere )
 		Local.spService = new storedProc(); // create a new storedproc service
 		Local.spService.setProcedure( "CategoryGet" ); // set attributes using implicit setters
 		Local.spService.addProcResult( name="rs1", resultset=1 ); // add procresults using addProcResult
 		Local.result = Local.spService.execute(); // execute the stored procedure
 		Application.categoryList = Local.result.getProcResultSets().rs1; // getProcResultSets() returns resultsets added using addProcresult()
+	}
+
+	// A session starts.
+	function onSessionStart() {
+		WriteLog(text="Session started successfully.", type="Information", file="logDemoApplication");
+		Session.cart = StructNew();
+		Session.totalQty = 0;
 	}
 
 	// A request starts.
@@ -56,6 +57,7 @@ component displayname="Application" hint="handle the application" accessors=true
 		Request.productActionObject = createObject("component", "Controllers.ProductAction" );
 		Request.cartActionObject = createObject("component", "Controllers.CartAction" );
 		Request.checkoutActionObject = createObject("component", "Controllers.CheckoutAction");
+		Request.userActionObject = createObject("component", "Controllers.UserAction");
 		WriteLog(text="Request started successfully.", type="Information", file="logDemoApplication");
 		return true;
 	}
@@ -99,6 +101,20 @@ component displayname="Application" hint="handle the application" accessors=true
 	// A session ends
 	function onSessionEnd(sessionScope, applicationScope) {
 		WriteLog(text="Session ended successfully.", type="Information", file="logDemoApplication");
+		if( !structIsEmpty( Session.cart )) {
+			Local.cart = "";
+			Local.product = structKeyArray( Session.cart );
+			Local.number = structCount( Session.cart );
+			for( Local.i=1; Local.i<=Local.number; Local.i++ ) {
+				Local.cart = Local.cart & toString( Local.product[Local.i] ) & '=' & toString( structFind( Session.cart, Local.product[Local.i] ) );
+				structDelete( Session.cart, Local.product[Local.i] );
+			}
+			Cookie.cart = {
+				value = Local.cart,
+				expires = "never",
+				secure = "true"
+			};
+		}
 	}
 
 	// The application ends: the application times out, or the server is stopped

@@ -11,7 +11,7 @@
 			<br /> <br /> <br /> <br /> <br />
 			<cfloop index="loopCount" from="1" to=#Application.categoryList.RecordCount#>
 				<li class="has-subnav">
-					<a href="Category.cfm?cat=<cfoutput>#Application.categoryList.CategoryId[loopCount]#</cfoutput>">
+					<a href="/Views/Category.cfm?cat=<cfoutput>#Application.categoryList.CategoryId[loopCount]#</cfoutput>">
 						<img width="35" height="35" src="../Assets/Images/Category/<cfoutput>#Application.categoryList.CategoryImage[loopCount]#</cfoutput>" class="leftNavMargin" />
 						<span class="nav-text leftNavMargin">
 							<cfoutput>#Application.categoryList.CategoryName[loopCount]#</cfoutput>

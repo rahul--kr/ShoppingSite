@@ -82,9 +82,8 @@ function validateMobile() {
 }
 
 // method to validate the whole form at once
-function validateForm(formObject, formField, fieldValue) {
+function register(formObject, formField, fieldValue) {
 	var isError = false;
-	isError = validateEMail() || isError;
 	isError = validateUName()|| isError;
 	isError = validatePass() || isError;
 	isError = validateCnfPass() || isError;

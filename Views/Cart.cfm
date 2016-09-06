@@ -21,6 +21,7 @@
 
 	<body>
 		<cfinclude template="/Views/_Header.cfm">
+		<cfinclude template="/Views/_NoScript.cfm">
 
 		<div class="bodyDist">
 			<cfinclude template="/Views/_LeftMenuBar.cfm">

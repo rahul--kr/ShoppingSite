@@ -14,13 +14,20 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 	}
 
 	// method to add product to cart
-	remote function addToCart( string pId ) {
+	remote function addToCart( string pId, string stock ) {
 		try {
-			structInsert( Session.cart, Arguments.pId, 1 );
-			return "Success";
+			if( structKeyExists( Session.cart, pId ) ) {
+				return increaseQuantity( Arguments.pId, Arguments.stock );
+			}
+			else {
+				structInsert( Session.cart, Arguments.pId, 1 );
+				Session.totalQty++;
+				return "Success";
+			}
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			// log exception
+			return exception.message;
 		}
 	}
 
@@ -31,7 +38,7 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 			Local.cartArray = StructKeyArray( Session.cart );
 			Local.pCount = StructCount( Session.cart );
 			for( Local.i=1; Local.i<=Local.pCount; Local.i++ ) {
-				Local.details[Local.i] = Request.dBOperationsObject.getProductData( Local.cartArray[i] );
+				Local.details[Local.i] = Request.dBOperationsObject.getProductData( Local.cartArray[Local.i] );
 			}
 			return Local.details;
 		}
@@ -44,6 +51,7 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 		try {
 			Local.quantity = structFind( Session.cart, Arguments.pId );
 			Local.newQty = Local.quantity - 1;
+			Session.totalQty--;
 			structDelete( Session.cart, Arguments.pId );
 			if( Local.newQty > 0 )
 				structInsert( Session.cart, Arguments.pId, Local.newQty );
@@ -61,12 +69,13 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 			if( Local.newQty < Arguments.stock ) {
 				Local.newQty = Local.newQty + 1;
 				Local.incremented = "y";
+				Session.totalQty++;
+				structDelete( Session.cart, Arguments.pId );
+				structInsert( Session.cart, Arguments.pId, Local.newQty );
 			}
-			structDelete( Session.cart, Arguments.pId );
-			structInsert( Session.cart, Arguments.pId, Local.newQty );
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			return Arguments.exception;
 		}
 		return Local.incremented & "Success" & toString( Local.newQty ) & "\\";
 	}

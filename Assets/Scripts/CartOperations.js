@@ -8,7 +8,7 @@
 */
 
 // method to add a product to cart with given product id 
-function addToCart( productId ) {
+function addToCart( productId, stock ) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -20,7 +20,7 @@ function addToCart( productId ) {
 			}
 		}
 	};
-	xhttp.open("GET", "/../Controllers/CartAction.cfc?method=addToCart&pId="+productId, true);
+	xhttp.open("GET", "/../Controllers/CartAction.cfc?method=addToCart&pId="+productId+"&stock="+stock, true);
 	xhttp.send();
 }
 
@@ -38,8 +38,10 @@ function decreaseQuantity( productId, costPerItem ) {
 		if ( xhttp.readyState == 4 && xhttp.status == 200 ) {
 			if ( xhttp.responseText.search(/Success/) > 0 ) {
 				var qty = getQty( xhttp.responseText );
-				if( qty == "0" )
+				if( qty == "0" ) {
 					location.reload();
+				}
+				document.getElementById( "cartQty" ).innerHTML = parseInt( document.getElementById( "cartQty" ).innerHTML ) - 1;
 				document.getElementById( "prodQty"+productId ).innerHTML = qty;
 				document.getElementById( "prodSubtotal"+productId ).innerHTML = costPerItem * qty;
 				document.getElementById( "gTotal" ).innerHTML = parseInt( document.getElementById( "gTotal" ).innerHTML ) - parseInt( costPerItem );
@@ -62,8 +64,10 @@ function increaseQuantity( productId, costPerItem, unitsInStock ) {
 				var qty = getQty( xhttp.responseText );
 				document.getElementById( "prodQty"+productId ).innerHTML = qty;
 				document.getElementById( "prodSubtotal"+productId ).innerHTML = costPerItem * qty;
-				if( xhttp.responseText[ xhttp.responseText.indexOf("Success") - 1] == 'y' )
+				if( xhttp.responseText[ xhttp.responseText.indexOf("Success") - 1] == 'y' ) {
 					document.getElementById( "gTotal" ).innerHTML = parseInt( document.getElementById( "gTotal" ).innerHTML ) + parseInt( costPerItem );
+					document.getElementById( "cartQty" ).innerHTML = parseInt( document.getElementById( "cartQty" ).innerHTML ) + 1;
+				}
 			}
 			else {
 				window.location = "Error.cfm?errors=" + xhttp.responseText;

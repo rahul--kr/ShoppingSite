@@ -8,14 +8,14 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 -- =============================================
--- Object		: StoredProcedure [dbo].[ProductGet]
+-- Object		: StoredProcedure [dbo].[ProductDataGet]
 -- Author		: Rahul Kumar
--- Create date	: 23 Aug 2016
--- Description	: To query the list of products in a particular category
+-- Create date	: 25 Aug 2016
+-- Description	: To query the data of a product by it's ProductId
 -- =============================================
-CREATE PROCEDURE [dbo].[ProductGet]
+CREATE PROCEDURE [dbo].[ProductDataGet]
 	-- Add the parameters for the stored procedure here
-	@Category [smallint] = 1
+	@PId [bigint] = 1
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -23,9 +23,11 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT ProductId, ProductName, ProductPrice, ProductImage
+	SELECT ProductId, ProductName, ProductDesc, ProductPrice, UnitsInStock, ProductImage, ProductShippingCost, ManufacturerName
 		FROM [dbo].[Product]
-		WHERE CategoryId = @Category
+		INNER JOIN Manufacturer
+		ON Product.ManufacturerId = Manufacturer.ManufacturerId
+		WHERE ProductId = @PId
 END
 
 GO

@@ -25,6 +25,7 @@
 
 	<body>
 		<cfinclude template="_Header.cfm">
+		<cfinclude template="/Views/_NoScript.cfm">
 
 		<div class="bodyDist">
 			<cfinclude template="_LeftMenuBar.cfm">
@@ -42,7 +43,7 @@
 				</cfif>
 
 				<cfif Variables.productData.UnitsInStock GT 0 >
-					<button class="btn btn-info col-xs-2" type="button" onClick="addToCart(<cfoutput>#Url.pId#</cfoutput>)"><span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> Add to Cart</button>
+					<button class="btn btn-info col-xs-2" type="button" onClick="addToCart( <cfoutput>#Url.pId#</cfoutput>, <cfoutput>#Variables.productData.UnitsInStock#</cfoutput> )"><span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> Add to Cart</button>
 					<br /> <br />
 					<p class="text-success">Product Available</p>
 					<cfelse>

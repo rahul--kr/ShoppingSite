@@ -28,7 +28,18 @@ component displayName="LoginAction" hint="action page for Login page view" acces
 		// rotate session and set session variables after user is successfully authenticated
 		sessionRotate();
 		Session.userName = Arguments.uName;
-		Session.userId = Request.dBOperationsObject.getUidFromUname( Session.userName );
+		Request.dBOperationsObject.getUidFromUname( Session.userName );
 		return "Success";
+	}
+
+	remote function logout() {
+		try {
+			structClear( Cookie );
+			structClear( Session );
+			return "Success";
+		}
+		catch( any exception ) {
+			return Arguments.exception.message;
+		}
 	}
 }

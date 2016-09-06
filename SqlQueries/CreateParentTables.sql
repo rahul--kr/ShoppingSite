@@ -1,7 +1,7 @@
 USE [ShoppingSite]
 
 CREATE TABLE [dbo].[Category](
-	[CategoryId] [smallint] NOT NULL,
+	[CategoryId] [smallint] IDENTITY(1, 1) NOT NULL,
 	[CategoryName] [varchar](50) NOT NULL,
 	[CategoryDesc] [varchar](max) NOT NULL,
 	[CategoryImage] [varchar](max) NULL,
@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[Category](
 (	[CategoryId] ))
 
 CREATE TABLE [dbo].[Manufacturer](
-	[ManufacturerId] [int] NOT NULL,
+	[ManufacturerId] [int] IDENTITY(1, 1) NOT NULL,
 	[ManufacturerName] [varchar](50) NOT NULL,
 	[ManufacturerDesc] [varchar](max) NOT NULL,
  CONSTRAINT [PK_Manufacturer_1] PRIMARY KEY CLUSTERED 
@@ -28,7 +28,7 @@ CREATE TABLE [dbo].[UserDetail](
 (	[UserId] ))
 
 CREATE TABLE [dbo].[ShippingAddress](
-	[AddressId] [bigint] NOT NULL,
+	[AddressId] [bigint] IDENTITY(1, 1) NOT NULL,
 	[HouseNo] [varchar](20) NOT NULL,
 	[Street] [varchar](20) NOT NULL,
 	[PostalCode] [varchar](6) NOT NULL,

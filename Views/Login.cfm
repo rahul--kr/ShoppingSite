@@ -18,6 +18,7 @@
 
 	<body>
 		<cfinclude template="_Header.cfm">
+		<cfinclude template="/Views/_NoScript.cfm">
 		<br /> <br /> <br /> <br />
 		<cfinclude template="/Views/_ListErrors.cfm" runOnce=false>
 

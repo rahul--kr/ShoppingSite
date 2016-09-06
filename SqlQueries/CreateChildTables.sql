@@ -1,7 +1,7 @@
 USE [ShoppingSite]
 
 CREATE TABLE [dbo].[Product](
-	[ProductId] [bigint] NOT NULL,
+	[ProductId] [bigint] IDENTITY(1, 1) NOT NULL,
 	[ProductName] [varchar](50) NOT NULL,
 	[ProductDesc] [varchar](max) NOT NULL,
 	[ProductPrice] [money] NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[Product](
 (	[ProductId] ))
 
 CREATE TABLE [dbo].[UserShippingDetail](
-	[UserShippingId] [bigint] NOT NULL,
+	[UserShippingId] [bigint] IDENTITY(1, 1) NOT NULL,
 	[UserId] [bigint] FOREIGN KEY REFERENCES UserDetail(UserId) NOT NULL,
 	[AddressId] [bigint] FOREIGN KEY REFERENCES ShippingAddress(AddressId) NOT NULL,
  CONSTRAINT [PK_UserShippingDetail_1] PRIMARY KEY CLUSTERED
@@ -28,7 +28,7 @@ CREATE TABLE [dbo].[OrderTable](
 (	[OrderId] ))
 
 CREATE TABLE [dbo].[OrderDetail](
-	[OrderDetailId] [bigint] NOT NULL,
+	[OrderDetailId] [bigint] IDENTITY(1,1) NOT NULL,
 	[ProductId] [bigint] FOREIGN KEY REFERENCES Product(ProductId) NOT NULL,
 	[OrderId] [bigint] FOREIGN KEY REFERENCES OrderTable(OrderId) NOT NULL,
 	[ProductQuantity] [smallint] NOT NULL,
