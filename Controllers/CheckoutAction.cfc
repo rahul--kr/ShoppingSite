@@ -14,20 +14,28 @@ component accessors=true output=false persistent=false {
 		return Request.dBOperationsObject.getAddresses( Session.userId );
 	}
 
-	// method to add order details to DB and empty the cart
-	remote function checkout( string userShippingId ) {
+	public function resetCart( string orderId ) {
 		try {
-			Local.orderId = Request.dBOperationsObject.addOrder( Arguments.userShippingId ).orderId;
 			if( ! structIsEmpty( Session.cart ) ) {
 				Local.cartArray = structKeyArray( Session.cart );
 				Local.pCount = structCount( Session.cart );
 				for( local.i=1; Local.i<=Local.pCount; Local.i++ ) {
-					Variables.errorMessage = Request.dBOperationsObject.addOrderProducts( Local.orderId, Local.cartArray[Local.i], structFind( Session.cart, toString(Local.cartArray[Local.i]) ) );
+					Variables.errorMessage = Request.dBOperationsObject.addOrderProducts( Arguments.orderId, Local.cartArray[Local.i], structFind( Session.cart, toString(Local.cartArray[Local.i]) ) );
 					Request.dBOperationsObject.addToCartDB( Local.cartArray[Local.i], "0" );
 					structDelete( Session.cart, Local.cartArray[Local.i] );
 				}
 				Session.totalQty = 0;
 			}
+		}
+		catch( any exception ) {
+			// log error and redirect to error page
+		}
+	}
+	// method to add order details to DB and empty the cart
+	remote function checkout( string userShippingId ) {
+		try {
+			Local.orderId = Request.dBOperationsObject.addOrder( Arguments.userShippingId ).orderId;
+			resetCart( toString( Local.orderId ) );
 		}
 		catch( any exception ) {
 			// log error and redirect to error page
@@ -47,14 +55,7 @@ component accessors=true output=false persistent=false {
 		// insert user address into DB
 		try {
 			Local.orderId = Request.dBOperationsObject.insertAddrOrder( Arguments ).orderId;
-			if( ! structIsEmpty( Session.cart ) ) {
-				Local.cartArray = structKeyArray( Session.cart );
-				Local.pCount = structCount( Session.cart );
-				for( local.i=1; Local.i<=Local.pCount; Local.i++ ) {
-					Variables.errorMessage = Request.dBOperationsObject.addOrderProducts( Local.orderId, Local.cartArray[Local.i], structFind( Session.cart, toString(Local.cartArray[Local.i]) ) );
-					structDelete( Session.cart, Local.cartArray[Local.i] );
-				}
-			}
+			resetCart( toString( Local.orderId ) );
 		}
 		catch( any exception ) {
 			// log error and redirect to error page
