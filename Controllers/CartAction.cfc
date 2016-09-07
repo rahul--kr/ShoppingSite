@@ -16,27 +16,32 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 	// method to add product to cart
 	remote function addToCart( string pId, string stock ) {
 		try {
+			Local.retMessage = "";
 			if( structKeyExists( Session.cart, pId ) ) {
-				return increaseQuantity( Arguments.pId, Arguments.stock );
+				Local.retMessage = increaseQuantity( Arguments.pId, Arguments.stock );
 			}
 			else {
 				structInsert( Session.cart, Arguments.pId, 1 );
 				Session.totalQty++;
-				return "Success";
+				Local.retMessage = "Success";
+				if( isDefined( "Session.userId" ) ) {
+					Request.dBOperationsObject.addToCartDB( Arguments.pId, structFind( Session.cart, Arguments.pId ) );
+				}
 			}
 		}
 		catch( any exception ) {
 			// log exception
 			return exception.message;
 		}
+		return Local.retMessage;
 	}
 
 	// method that gets details of products stored in user's cart
 	remote array function getCartDetails( struct cart ) {
 		try {
 			Local.details = arrayNew(1);
-			Local.cartArray = StructKeyArray( Session.cart );
-			Local.pCount = StructCount( Session.cart );
+			Local.cartArray = structKeyArray( Session.cart );
+			Local.pCount = structCount( Session.cart );
 			for( Local.i=1; Local.i<=Local.pCount; Local.i++ ) {
 				Local.details[Local.i] = Request.dBOperationsObject.getProductData( Local.cartArray[Local.i] );
 			}
@@ -53,8 +58,12 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 			Local.newQty = Local.quantity - 1;
 			Session.totalQty--;
 			structDelete( Session.cart, Arguments.pId );
-			if( Local.newQty > 0 )
+			if( Local.newQty > 0 ) {
 				structInsert( Session.cart, Arguments.pId, Local.newQty );
+			}
+			if( isDefined( "Session.userId" ) ) {
+				Request.dBOperationsObject.addToCartDB( Arguments.pId, Local.newQty );
+			}
 		}
 		catch( any exception ) {
 			return Arguments.exception.message;
@@ -72,6 +81,9 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 				Session.totalQty++;
 				structDelete( Session.cart, Arguments.pId );
 				structInsert( Session.cart, Arguments.pId, Local.newQty );
+				if( isDefined( "Session.userId" ) ) {
+					Request.dBOperationsObject.addToCartDB( Arguments.pId, structFind( Session.cart, Arguments.pId ) );
+				}
 			}
 		}
 		catch( any exception ) {

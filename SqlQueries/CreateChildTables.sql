@@ -34,3 +34,11 @@ CREATE TABLE [dbo].[OrderDetail](
 	[ProductQuantity] [smallint] NOT NULL,
  CONSTRAINT [PK_OrderDetail_1] PRIMARY KEY CLUSTERED
 (	[OrderDetailId] ))
+
+CREATE TABLE [dbo].[Cart](
+	[UserId] [bigint] FOREIGN KEY REFERENCES UserDetail(UserId) NOT NULL,
+	[ProductId] [bigint] FOREIGN KEY REFERENCES Product(ProductId) NOT NULL,
+	[Quantity] [smallint] NOT NULL,
+ CONSTRAINT [PK_Cart_1] PRIMARY KEY
+( [UserId], [ProductId] ))
+

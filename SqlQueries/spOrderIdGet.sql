@@ -3,6 +3,7 @@ GO
 
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
 
@@ -34,7 +35,7 @@ BEGIN
 		INSERT INTO OrderTable( OrderId, DateCreated, UserShippingId )
 			VALUES ( @orderId, GETDATE(), @uSId );
 
-	COMMIT
+	COMMIT TRAN
 
 	RETURN @orderId
 END

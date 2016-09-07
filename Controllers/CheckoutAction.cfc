@@ -23,8 +23,10 @@ component accessors=true output=false persistent=false {
 				Local.pCount = structCount( Session.cart );
 				for( local.i=1; Local.i<=Local.pCount; Local.i++ ) {
 					Variables.errorMessage = Request.dBOperationsObject.addOrderProducts( Local.orderId, Local.cartArray[Local.i], structFind( Session.cart, toString(Local.cartArray[Local.i]) ) );
+					Request.dBOperationsObject.addToCartDB( Local.cartArray[Local.i], "0" );
 					structDelete( Session.cart, Local.cartArray[Local.i] );
 				}
+				Session.totalQty = 0;
 			}
 		}
 		catch( any exception ) {

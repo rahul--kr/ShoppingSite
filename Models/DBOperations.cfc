@@ -108,6 +108,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		return "";
 	}
 
+	// method to retrive user id from given user name
 	public function getUidFromUname( string uName ) {
 		Local.queryService = new query();
 		queryService.setName( "getUname" );
@@ -158,6 +159,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		return Local.productData;
 	}
 
+	// method to retrive the addresses saved by a particular user
 	public function getAddresses( string uId ) {
 		Local.queryService = new query();
 		queryService.setName( "getAddress" );
@@ -177,6 +179,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		return Local.queryAddress;
 	}
 
+	// method to add orders to DB
 	public function addOrder( string userShippingId ) {
 		try {
 			Local.spService = new storedProc();
@@ -192,6 +195,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		return Local.orderId;
 	}
 
+	// method to add the details of the orders for any order into DB
 	public function addOrderProducts( string orderId, string prodId, string quantity ) {
 		try {
 			Local.queryService = new query();
@@ -213,6 +217,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		return "";
 	}
 
+	// method to add new address and add order for that address
 	public function insertAddrOrder( struct address ) {
 		try {
 			Local.spService = new storedProc();
@@ -235,6 +240,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		return Local.orderId;
 	}
 
+	// method to get user information given the user id for the profile page
 	public function getUserInfo( struct address ) {
 		try {
 			Local.queryService = new query();
@@ -251,6 +257,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		return Local.queryUserInfo;
 	}
 
+	// method to retrive all the placed orders of a given user
 	public function getOrders() {
 		try {
 			Local.spService = new storedProc();
@@ -265,5 +272,38 @@ component displayname="DBOperations" hint="CF component that handles and execute
 			return exception;
 		}
 		return Local.orders;
+	}
+
+	// method to save cart data into DB for registered users
+	public function addToCartDB( string pId, string quantity ) {
+		try {
+			Local.spService = new storedProc();
+			Local.spService.setProcedure( "CartAdd" );
+			Local.spService.addParam( cfsqltype="cf_sql_bigint", type="in", value=Session.userId );
+			Local.spService.addParam( cfsqltype="cf_sql_bigint", type="in", value=Arguments.pId );
+			Local.spService.addParam( cfsqltype="cf_sql_bigint", type="in", value=Arguments.quantity );
+			Local.spService.addProcResult( name="rs1", resultset=1 );
+			Local.result = Local.spService.execute();
+		}
+		catch( any exception ) {
+			// log error and redirect to error page
+		}
+	}
+
+	// method to get the cart details from previous session for the user
+	public function getCart() {
+		try {
+			Local.queryService = new query();
+			Local.queryService.setName( "getUserCartInfo" );
+			Local.queryService.addParam( name="uId", value=Session.userId, cfsqltype="cf_sql_bigint" );
+			Local.getUserCartInfo = queryService.execute( sql="SELECT
+				ProductId, Quantity
+				FROM Cart
+				WHERE UserId=:uId" ).getResult();
+		}
+		catch( any exception ) {
+			// log error and redirect to error page
+		}
+		return Local.getUserCartInfo;
 	}
 }

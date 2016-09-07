@@ -26,8 +26,8 @@ BEGIN
 	SELECT ProductId, ProductName, ProductDesc, ProductPrice, UnitsInStock, ProductImage, ProductShippingCost, ManufacturerName
 		FROM [dbo].[Product]
 		INNER JOIN Manufacturer
-		ON Product.ManufacturerId = Manufacturer.ManufacturerId
-		WHERE ProductId = @PId
+			ON Product.ManufacturerId = Manufacturer.ManufacturerId
+			WHERE ProductId = @PId
 END
 
 GO

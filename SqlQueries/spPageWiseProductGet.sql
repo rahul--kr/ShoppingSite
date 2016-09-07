@@ -1,8 +1,9 @@
 USE [ShoppingSite]
 GO
-/****** Object:  StoredProcedure [dbo].[ProductGet]    Script Date: 8/25/2016 12:21:35 PM ******/
+
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
 
@@ -35,3 +36,5 @@ BEGIN
 	WHERE CategoryId = @Category
 		AND ProductId BETWEEN @Begin AND @End;
 END
+
+GO
