@@ -24,7 +24,8 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT ProductId, ProductName, ProductPrice, ProductImage
-		FROM FREETEXTTABLE( dbo.Product, ProductName, @searchText ) AS T INNER JOIN dbo.Product P
+		FROM FREETEXTTABLE( dbo.Product, (ProductName, ProductDesc), @searchText ) AS T
+			INNER JOIN dbo.Product P
 			ON T.[Key] = P.[ProductId]
 		ORDER BY T.[RANK] DESC
 
