@@ -7,7 +7,7 @@
 =======================================================================
 --->
 
-		<div class="container-fluid panel-footer">
+		<div class="container-fluid panel-footer bottom">
 			<footer>
 				<span class="nav-item col-lg-2">Get to know us: </span>
 				<a href="" class="nav-item col-lg-1">About Us</a>

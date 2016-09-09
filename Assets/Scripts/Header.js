@@ -26,6 +26,7 @@ window.onclick = function(event) {
 	}
 }
 
+// method to logout a logged in user
 function logout() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
@@ -41,3 +42,24 @@ function logout() {
 	xhttp.open("GET", "/../Controllers/LoginAction.cfc?method=logout", true);
 	xhttp.send();
 }
+
+/*
+// method for search functionality
+function getSearchResult() {
+	var searchText = document.getElementById("tSearch").value;
+	alert( searchText );
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			if( xhttp.responseText.search(/Success/) > 0 ) {
+				window.location = "/../Views/Category.cfm?query=1";
+			}
+			else {
+				window.location = "Error.cfm?errors=" + xhttp.responseText;
+			}
+		}
+	};
+	xhttp.open("GET", "/../Controllers/CategoryAction.cfc?method=getSearchResult&searchText="+searchText, true);
+	xhttp.send();
+}
+*/

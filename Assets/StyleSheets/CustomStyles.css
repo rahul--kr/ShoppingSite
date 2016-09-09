@@ -7,11 +7,23 @@
 =======================================================================
 */
 
+.bottom {
+	margin-left: 60px;
+}
+
+html, body {
+	height: 85%;
+}
+
+.wrapper {
+	min-height: 85%;
+}
+
 .search-btn {
 	position: absolute;
 	right: 0;
 	top: 0;
-	bottom:0;
+	bottom: 0;
 }
 
 .search-input {
@@ -20,10 +32,6 @@
 
 .search-div {
 	position: relative;
-}
-
-.halfWidth {
-	width: 50%;
 }
 
 .navbar {
@@ -40,18 +48,10 @@
 	background-color: #fff;
 }
 
-.form div+div {
-	margin-top: 1em;
-}
-
 .prodImage {
 	float: left;
 	margin-left: 50px;
 	margin-right: 50px;
-}
-
-.dottedBox {
-	border: 1px dotted black;
 }
 
 .hiddenBox {
@@ -78,8 +78,8 @@ p.text-xs-center a+a {
 	color: inherit;
 }
 
-.leftNavMargin {
-	margin-left: 10px;
+.leftMargin {
+	margin-left: 12px;
 }
 
 .navbar {
@@ -133,8 +133,4 @@ p.text-xs-center a+a {
 	display: inline-block;
 	width: 250px;
 	text-align: right;
-}
-
-.button1 {
-	border: none;
 }

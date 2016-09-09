@@ -17,4 +17,9 @@ component displayName="CategoryAction" hint="handles category page actions" acce
 		Local.productList = Request.dBOperationsObject.getProductList( Arguments.cat );
 		return Local.productList;
 	}
+
+	remote function getSearchResult( string searchText ) {
+		Local.productList = Request.dBOperationsObject.getSearchResult( Arguments.searchText );
+		return Local.productList;
+	}
 }

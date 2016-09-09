@@ -14,21 +14,21 @@
 	</head>
 
 	<body>
+		<div class="wrapper">
+			<cfinclude template="/Views/_Header.cfm">
 
-		<cfinclude template="/Views/_Header.cfm">
+			<div class="bodyDist">
 
-		<div class="bodyDist">
-			<cfinclude template="/Views/_LeftMenuBar.cfm">
+				<noscript>
+					<p class="text-danger text-xs-center">JavaScript is not enabled on your browser. Kindly enable it to continue with the website.</p>
+				</noscript>
 
-			<noscript>
-				<p class="text-danger text-xs-center">JavaScript is not enabled on your browser. Kindly enable it to continue with the website.</p>
-			</noscript>
+				<cfinclude template="/Views/_LeftMenuBar.cfm">
 
-			<br class="clearFloat" />
-			<cfinclude template="/Views/_Footer.cfm">
+				<br class="clearFloat" />
+			</div>
 		</div>
-
-		<script src="https://code.jquery.com/jquery-3.1.0.slim.min.js" integrity="sha256-cRpWjoSOw5KcyIOaZNo4i6fZ9tKPhYYb6i5T9RSVJG8=" crossorigin="anonymous"></script>
-		<script language="javascript" src="../Assets/Scripts/Header.js"></script>
+		<br class="clearFloat" />
+		<cfinclude template="/Views/_Footer.cfm">
 	</body>
 </html>

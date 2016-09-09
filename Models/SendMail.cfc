@@ -34,7 +34,7 @@ component displayName="SendMail" hint="CF component that handles email sending f
 			}
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			return exception.message;
 		}
 		return "";
 	}

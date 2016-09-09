@@ -66,7 +66,7 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 			}
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			return exception.message;
 		}
 		return "Success" & toString( Local.newQty ) & "\\";
 	}
@@ -87,7 +87,7 @@ component displayName="CartAction" hint="handles cart operations" accessors=true
 			}
 		}
 		catch( any exception ) {
-			return Arguments.exception;
+			return exception.message;
 		}
 		return Local.incremented & "Success" & toString( Local.newQty ) & "\\";
 	}

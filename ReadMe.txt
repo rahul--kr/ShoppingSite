@@ -18,7 +18,7 @@ FEATURES:
 - Registration and login facility
 - Adding to cart, manipulating quantity in cart
 - Order summary at checkout page and placing orders
-- Saving address for saving time
+- Saving address into DB for registered users
 
 
 FILES:

@@ -55,7 +55,7 @@ component displayName="LoginAction" hint="action page for Login page view" acces
 			return "Success";
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			return exception.message;
 		}
 	}
 }

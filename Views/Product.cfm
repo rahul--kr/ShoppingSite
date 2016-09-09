@@ -58,7 +58,7 @@
 			</div>
 
 			<br class="clearFloat" />
-			<cfinclude template="_Footer.cfm">
 		</div>
+		<cfinclude template="_Footer.cfm">
 	</body>
 </html>

@@ -39,7 +39,7 @@ component accessors=true output=false persistent=false {
 		}
 		catch( any exception ) {
 			// log error and redirect to error page
-			return exception;
+			return exception.message;
 		}
 		return "Success";
 	}
@@ -59,7 +59,7 @@ component accessors=true output=false persistent=false {
 		}
 		catch( any exception ) {
 			// log error and redirect to error page
-			return exception;
+			return exception.message;
 		}
 		return "Success";
 	}

@@ -21,9 +21,9 @@
 				<h2 class="nav-item textBlack"><cfoutput>#Application.applicationName#</cfoutput></h2>
 			</a>
 
-			<form class="nav-item col-xs-6 search-div">
-				<input class="nav-item form-control search-input" type="text" placeholder="What do you want?" autofocus />
-				<button class="btn btn-primary nav-item search-btn" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+			<form class="nav-item col-xs-6 search-div" action="/Views/Category.cfm?query=1">
+				<input type="text" name="tSearch" class="nav-item form-control search-input" id="tSearch" placeholder="What do you want?" autofocus />
+				<button type="submit" class="btn btn-primary nav-item search-btn" id="searchBtn" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 			</form>
 			<cfif isDefined("Session.userName")>
 				<button class="btn btn-primary nav-item dropBtn col-xs-2" onClick="dropDown()"><span class="glyphicon glyphicon-user" aria-hidden="true"> </span> <cfoutput>#Session.userName#</cfoutput></button>

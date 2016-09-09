@@ -48,7 +48,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 			}
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			return exception.message;
 		}
 		return "";
 	}
@@ -78,7 +78,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 				:fName, :lName, :mobile	)" );
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			return exception.message;
 		}
 		return "";
 	}
@@ -103,7 +103,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 			}
 		}
 		catch( any exception ) {
-			return Arguments.exception.message;
+			return exception.message;
 		}
 		return "";
 	}
@@ -212,7 +212,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		}
 		catch( any exception ) {
 			// log error and redirect to error page
-			return exception;
+			return exception.message;
 		}
 		return "";
 	}
@@ -235,7 +235,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		}
 		catch( any exception ) {
 			// log error and redirect to error page
-			return exception;
+			return exception.message;
 		}
 		return Local.orderId;
 	}
@@ -269,7 +269,7 @@ component displayname="DBOperations" hint="CF component that handles and execute
 		}
 		catch( any exception ) {
 			// log error and redirect to error page
-			return exception;
+			return exception.message;
 		}
 		return Local.orders;
 	}
@@ -305,5 +305,22 @@ component displayname="DBOperations" hint="CF component that handles and execute
 			// log error and redirect to error page
 		}
 		return Local.getUserCartInfo;
+	}
+
+	// get the list of products according to the text queried
+	public function getSearchResult( string searchText ) {
+		try {
+			Local.spService = new storedProc();
+			Local.spService.setProcedure( "SearchProductGet" );
+			Local.spService.addParam( cfsqltype="cf_sql_varchar", type="in", value=Arguments.searchText );
+//			Local.spService.addParam( cfsqltype="cf_sql_smallint", type="in", value=Arguments.pageNo);
+			Local.spService.addProcResult( name="rs1", resultset=1 );
+			Local.result = Local.spService.execute();
+			Local.productList = Local.result.getProcResultSets().rs1;
+		}
+		catch( any exception ) {
+			// log error and redirect to error page
+		}
+		return Local.productList;
 	}
 }
